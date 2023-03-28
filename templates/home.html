@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% include 'navbar.html' %}
+{% block content %}
+
+    <main role="main">
+
+
+      <div class="jumbotron" >
+        <div class="container">
+        <img src="/static/images/WorkoutHub.png" class="img-fluid cover">
+          <h1 class="display-3">Hello, {{ current_user.name }}</h1>
+          <p>Welcome to your WorkoutHub</p>
+
+        </div>
+      </div>
+
+      <div class="container">
+
+
+
+        <div class="row">
+          {% for item in workouts: %}
+
+          <div class="col-md-4">
+            <h2> {{ item }}</h2>
+            <p><a class="btn btn-primary" href=" {{ url_for('weights', exercise= item) }}" role="button">Lets Go &raquo;</a></p>
+          </div>
+
+           {% endfor %}
+        </div>
+        <div class="col-md-4">
+            <h2> New Workout </h2>
+            <p><a class="btn btn-primary" href=" {{ url_for('add') }}" role="button">Add New Workout! &raquo;</a></p>
+          </div>
+
+
+        <hr>
+
+      </div> <!-- /container -->
+
+    </main>
+ {% endblock %}

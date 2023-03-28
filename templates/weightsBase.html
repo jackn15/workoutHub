@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% include 'navbar.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block content %}
+
+<br/>
+    <h1>{{ exercise }} </h1>
+
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-6">
+            {{ wtf.quick_form(form, novalidate=True) }}
+        </div>
+
+        <div class="col-lg-6">
+            GRAPH
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

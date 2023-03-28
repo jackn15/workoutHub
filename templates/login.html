@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}Login {% endblock %}
+
+{% block content%}
+<div class="container" >
+
+
+    <div class="jumbotron">
+        <div class="container">
+          <h1 class="display-3">Welcome</h1>
+          <p>Please log in to your WorkoutsHub</p>
+
+        </div>
+      </div>
+
+    <div class="row">
+        <div class="col-sm-12 col-md-8">
+
+            <h1>LogIn</h1>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                     <ul class=flashes>
+                        {% for message in messages %}
+                        <li>{{ message }}</li>
+                         {% endfor %}
+                     </ul>
+                {% endif %}
+            {% endwith %}
+
+            {{ wtf.quick_form(form, novalidate=True) }}
+
+            <p><a class="btn btn-primary" href="{{ url_for('register') }}">Register</a></p>
+
+        </div>
+    </div>
+</div>
+
+{% endblock%}
