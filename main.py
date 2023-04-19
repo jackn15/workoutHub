@@ -1,22 +1,24 @@
 import datetime
+import os
 
 from flask import Flask, render_template, request, url_for, redirect, flash
 from flask_wtf import FlaskForm
+from sqlalchemy import create_engine, text
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from wtforms import StringField, SubmitField, PasswordField, FloatField, DateField
 from wtforms.validators import DataRequired
 from flask_bootstrap import Bootstrap
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
-from sqlalchemy import Table, Column, Integer, ForeignKey
+import pandas as pd
+import matplotlib.pyplot as plt
 from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
 
 
 
 app = Flask(__name__)
 Bootstrap(app)
-app.config['SECRET_KEY'] = "thisisakey"
+app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///workoutHub.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -24,6 +26,8 @@ db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+
+# cnx = create_engine('sqlite:///workoutHub.db').connect()
 
 
 @login_manager.user_loader
@@ -57,8 +61,8 @@ class Workout(db.Model):
 
 
 
-with app.app_context():
-    db.create_all()
+# with app.app_context():
+#     db.create_all()
 
 
 class RegisterForm(FlaskForm):
@@ -181,10 +185,16 @@ def login():
     return render_template("login.html", form=form)
 
 
+
+
 @app.route('/workout/<string:exercise>', methods=['GET', 'POST'])
 def weights(exercise):
     form = WeightsForm()
     workout = exercise
+    # workout_df = pd.read_sql("workouts", con= app.config['SQLALCHEMY_DATABASE_URI'] )
+    # workout_df = pd.DataFrame(db.engine.connect().execute(text("workouts")))
+    # workout_df = pd.DataFrame()
+    # print(workout_df)
     if form.validate_on_submit():
 
         new_workout = Workout(
